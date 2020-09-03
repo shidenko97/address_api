@@ -1,17 +1,26 @@
 from aiohttp import web
-from typing import Any, Coroutine
 
 from config import Config
 from db import init_db
 from views import country
 
 
-def create_application() -> Coroutine[Any, Any, web.Application]:
+def main() -> None:
     """Application entrypoint."""
 
     config = Config.load_config()
 
     app = init_app(config=config)
+
+    web.run_app(app)
+
+
+async def get_async_application() -> web.Application:
+    """Application entrypoint."""
+
+    config = Config.load_config()
+
+    app = await init_app(config=config)
 
     return app
 
@@ -50,4 +59,4 @@ async def init_app(*, config: dict) -> web.Application:
 
 
 if __name__ == "__main__":
-    web.run_app(create_application())
+    main()
