@@ -1,18 +1,19 @@
 from aiohttp import web
+from typing import Any, Coroutine
 
 from config import Config
 from db import init_db
 from views import country
 
 
-def main() -> None:
+def create_application() -> Coroutine[Any, Any, web.Application]:
     """Application entrypoint."""
 
     config = Config.load_config()
 
     app = init_app(config=config)
 
-    web.run_app(app)
+    return app
 
 
 def setup_routes(*, app: web.Application) -> None:
@@ -49,4 +50,4 @@ async def init_app(*, config: dict) -> web.Application:
 
 
 if __name__ == "__main__":
-    main()
+    web.run_app(create_application())
