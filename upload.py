@@ -94,20 +94,16 @@ async def main(source_name: str):
             parent_name: str = ""
             parent_id: int = 0
 
-            for address_type in (
-                "Country",
-                "Region",
-                "Area",
-                "Locality",
-                "District",
-                "Street",
-                "House",
-            ):
+            for address_type, address_attributes in row.items():
+
+                if not isinstance(address_attributes, AddressEntity):
+                    continue
+
                 lowed_type = address_type.lower()
                 parent_id = await _add_or_find_record(
                     conn=conn,
                     address_type=lowed_type,
-                    obj=row.get(address_type),
+                    obj=address_attributes,
                     obj_attrs={parent_name: parent_id},
                 )
                 parent_name = f"{lowed_type}_id"
