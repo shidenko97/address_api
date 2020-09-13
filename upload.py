@@ -1,21 +1,12 @@
 import argparse
 import asyncio
-from typing import Union
 
 from asyncpg.pool import PoolConnectionProxy
 
 from config import Config
 from db import init_db
 from logic import upload as upload_module
-from logic.entities import (
-    Area,
-    Country,
-    District,
-    House,
-    Locality,
-    Region,
-    Street,
-)
+from logic.entities import AddressEntity
 from source.base_source import BaseSource
 from source.ukrposhta import Ukrposhta
 
@@ -43,7 +34,7 @@ async def _add_or_find_record(
     *,
     conn: PoolConnectionProxy,
     address_type: str,
-    obj: Union[Country, Region, Area, Locality, District, Street, House],
+    obj: AddressEntity,
     obj_attrs: dict,
 ) -> int:
     """
@@ -55,7 +46,7 @@ async def _add_or_find_record(
     :param address_type: Type of address record
     :type address_type: str
     :param obj: Object to add/find
-    :type obj: Union[Country, Region, Area, Locality, District, Street, House]
+    :type obj: AddressEntity
     :param obj_attrs: Additional attributes for object
     :type obj_attrs: dict
     :raise: ValueError - can't find and add address record

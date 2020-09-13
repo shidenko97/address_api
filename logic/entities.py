@@ -1,6 +1,17 @@
 class AddressEntity:
     """Base class for address types."""
 
+    def __setattr__(self, key, value):
+        """Trim string values in class attributes"""
+
+        super().__setattr__(
+            key, value.strip() if isinstance(value, str) else value
+        )
+
+
+class AddressEntityWithName(AddressEntity):
+    """Base class for address types with name attribute."""
+
     def __init__(self, *, name: str):
         self.name = name
 
@@ -8,7 +19,7 @@ class AddressEntity:
         return f"<{self.__class__.__name__}: {self.name}>"
 
 
-class Country(AddressEntity):
+class Country(AddressEntityWithName):
     """Country address type."""
 
     def __init__(self, *, name: str, code: str):
@@ -16,7 +27,7 @@ class Country(AddressEntity):
         self.code = code
 
 
-class Region(AddressEntity):
+class Region(AddressEntityWithName):
     """Region address type."""
 
     def __init__(self, *, name: str, geoip_name: str = ""):
@@ -25,7 +36,7 @@ class Region(AddressEntity):
         self.geoip_name = geoip_name
 
 
-class Area(AddressEntity):
+class Area(AddressEntityWithName):
     """Area address type."""
 
     def __init__(self, *, name: str):
@@ -33,7 +44,7 @@ class Area(AddressEntity):
         self.region_id = None
 
 
-class Locality(AddressEntity):
+class Locality(AddressEntityWithName):
     """Locality address type."""
 
     def __init__(self, *, name: str):
@@ -41,7 +52,7 @@ class Locality(AddressEntity):
         self.area_id = None
 
 
-class District(AddressEntity):
+class District(AddressEntityWithName):
     """District address type."""
 
     def __init__(self, *, name: str):
@@ -49,7 +60,7 @@ class District(AddressEntity):
         self.locality_id = None
 
 
-class Street(AddressEntity):
+class Street(AddressEntityWithName):
     """Street address type."""
 
     def __init__(self, *, name: str):
@@ -57,7 +68,7 @@ class Street(AddressEntity):
         self.district_id = None
 
 
-class House:
+class House(AddressEntity):
     """House address type."""
 
     def __init__(self, *, number: str, index: str = ""):
