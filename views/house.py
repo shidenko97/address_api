@@ -10,7 +10,34 @@ from utils.json_serializer import to_json
 
 
 async def all_houses_in_street(request: web.Request):
-    """Get all areas."""
+    """
+    ---
+    description: Get list of areas by street id.
+    tags:
+        - Houses
+    produces:
+        - application/json
+    parameters:
+        - in: path
+          name: street_id
+          description: Street for house.
+          type: int
+          required: true
+        - in: query
+          name: q
+          description: Substring to filter results.
+          type: str
+          requires: false
+        - in: query
+          name: limit
+          description: Max count of houses in list. Maximum is 200.
+          default: 200
+          type: int
+          requires: false
+    responses:
+        "200":
+            description: List of houses.
+    """
 
     street_id = int(request.match_info.get("street_id", "0"))
 
@@ -32,7 +59,24 @@ async def all_houses_in_street(request: web.Request):
 
 
 async def get_one_house(request: web.Request):
-    """Get area by id."""
+    """
+    ---
+    description: Get house by id.
+    method: GET
+    tags:
+        - Houses
+    produces:
+        - application/json
+    parameters:
+        - in: path
+          name: house_id
+          description: House id.
+          type: int
+          required: true
+    responses:
+        "200":
+            description: House object.
+    """
 
     house_id = int(request.match_info.get("house_id"))
 
@@ -44,7 +88,24 @@ async def get_one_house(request: web.Request):
 
 
 async def get_full_address_by_one_house(request: web.Request):
-    """Get area by id."""
+    """
+    ---
+    description: Get full address by house.
+    method: GET
+    tags:
+        - Houses
+    produces:
+        - application/json
+    parameters:
+        - in: path
+          name: house_id
+          description: House id.
+          type: int
+          required: true
+    responses:
+        "200":
+            description: Full address object by house.
+    """
 
     house_id = int(request.match_info.get("house_id"))
 

@@ -9,7 +9,34 @@ from utils.json_serializer import to_json
 
 
 async def all_districts_in_locality(request: web.Request):
-    """Get all districts."""
+    """
+    ---
+    description: Get list of districts by locality id.
+    tags:
+        - Districts
+    produces:
+        - application/json
+    parameters:
+        - in: path
+          name: locality_id
+          description: Locality for district.
+          type: int
+          required: true
+        - in: query
+          name: q
+          description: Substring to filter results.
+          type: str
+          requires: false
+        - in: query
+          name: limit
+          description: Max count of districts in list. Maximum is 200.
+          default: 200
+          type: int
+          requires: false
+    responses:
+        "200":
+            description: List of districts.
+    """
 
     locality_id = int(request.match_info.get("locality_id", "0"))
 
@@ -31,7 +58,24 @@ async def all_districts_in_locality(request: web.Request):
 
 
 async def get_one_district(request: web.Request):
-    """Get district by id."""
+    """
+    ---
+    description: Get district by id.
+    method: GET
+    tags:
+        - Districts
+    produces:
+        - application/json
+    parameters:
+        - in: path
+          name: district_id
+          description: District id.
+          type: int
+          required: true
+    responses:
+        "200":
+            description: District object.
+    """
 
     district_id = int(request.match_info.get("district_id"))
 

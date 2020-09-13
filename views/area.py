@@ -9,7 +9,34 @@ from utils.json_serializer import to_json
 
 
 async def all_areas_in_region(request: web.Request):
-    """Get all areas."""
+    """
+    ---
+    description: Get list of areas by region id.
+    tags:
+        - Areas
+    produces:
+        - application/json
+    parameters:
+        - in: path
+          name: region_id
+          description: Region for area.
+          type: int
+          required: true
+        - in: query
+          name: q
+          description: Substring to filter results.
+          type: str
+          requires: false
+        - in: query
+          name: limit
+          description: Max count of areas in list. Maximum is 200.
+          default: 200
+          type: int
+          requires: false
+    responses:
+        "200":
+            description: List of areas.
+    """
 
     region_id = int(request.match_info.get("region_id", "0"))
 
@@ -31,7 +58,24 @@ async def all_areas_in_region(request: web.Request):
 
 
 async def get_one_area(request: web.Request):
-    """Get area by id."""
+    """
+    ---
+    description: Get area by id.
+    method: GET
+    tags:
+        - Areas
+    produces:
+        - application/json
+    parameters:
+        - in: path
+          name: area_id
+          description: Area id.
+          type: int
+          required: true
+    responses:
+        "200":
+            description: Area object.
+    """
 
     area_id = int(request.match_info.get("area_id"))
 

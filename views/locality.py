@@ -9,7 +9,34 @@ from utils.json_serializer import to_json
 
 
 async def all_localities_in_area(request: web.Request):
-    """Get all localities."""
+    """
+    ---
+    description: Get list of localities by area id.
+    tags:
+        - Localities
+    produces:
+        - application/json
+    parameters:
+        - in: path
+          name: area_id
+          description: Area for locality.
+          type: int
+          required: true
+        - in: query
+          name: q
+          description: Substring to filter results.
+          type: str
+          requires: false
+        - in: query
+          name: limit
+          description: Max count of localities in list. Maximum is 200.
+          default: 200
+          type: int
+          requires: false
+    responses:
+        "200":
+            description: List of localities.
+    """
 
     area_id = int(request.match_info.get("area_id", "0"))
 
@@ -31,7 +58,24 @@ async def all_localities_in_area(request: web.Request):
 
 
 async def get_one_locality(request: web.Request):
-    """Get locality by id."""
+    """
+    ---
+    description: Get locality by id.
+    method: GET
+    tags:
+        - Localities
+    produces:
+        - application/json
+    parameters:
+        - in: path
+          name: locality_id
+          description: Locality id.
+          type: int
+          required: true
+    responses:
+        "200":
+            description: Locality object.
+    """
 
     locality_id = int(request.match_info.get("locality_id"))
 

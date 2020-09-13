@@ -9,7 +9,29 @@ from utils.json_serializer import to_json
 
 
 async def all_countries(request: web.Request):
-    """Get all countries."""
+    """
+    ---
+    description: Get list of countries.
+    tags:
+        - Countries
+    produces:
+        - application/json
+    parameters:
+        - in: query
+          name: q
+          description: Substring to filter results.
+          type: str
+          requires: false
+        - in: query
+          name: limit
+          description: Max count of countries in list. Maximum is 200.
+          default: 200
+          type: int
+          requires: false
+    responses:
+        "200":
+            description: List of countries.
+    """
 
     q = request.match_info.get("q")
     limit = int(request.match_info.get("limit", "0"))
@@ -27,7 +49,24 @@ async def all_countries(request: web.Request):
 
 
 async def get_one_country(request: web.Request):
-    """Get country by id."""
+    """
+    ---
+    description: Get country by id.
+    method: GET
+    tags:
+        - Countries
+    produces:
+        - application/json
+    parameters:
+        - in: path
+          name: country_id
+          description: Country id.
+          type: int
+          required: true
+    responses:
+        "200":
+            description: Country object.
+    """
 
     country_id = int(request.match_info.get("country_id"))
 

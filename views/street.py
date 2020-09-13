@@ -11,7 +11,34 @@ from utils.json_serializer import to_json
 
 
 async def all_streets_in_district(request: web.Request):
-    """Get all districts."""
+    """
+    ---
+    description: Get list of streets by district id.
+    tags:
+        - Streets
+    produces:
+        - application/json
+    parameters:
+        - in: path
+          name: district_id
+          description: District for street.
+          type: int
+          required: true
+        - in: query
+          name: q
+          description: Substring to filter results.
+          type: str
+          requires: false
+        - in: query
+          name: limit
+          description: Max count of streets in list. Maximum is 200.
+          default: 200
+          type: int
+          requires: false
+    responses:
+        "200":
+            description: List of streets.
+    """
 
     district_id = int(request.match_info.get("district_id", "0"))
 
@@ -33,7 +60,34 @@ async def all_streets_in_district(request: web.Request):
 
 
 async def all_streets_in_locality(request: web.Request):
-    """Get all districts."""
+    """
+    ---
+    description: Get list of streets by locality id.
+    tags:
+        - Streets
+    produces:
+        - application/json
+    parameters:
+        - in: path
+          name: locality_id
+          description: Locality for street.
+          type: int
+          required: true
+        - in: query
+          name: q
+          description: Substring to filter results.
+          type: str
+          requires: false
+        - in: query
+          name: limit
+          description: Max count of streets in list. Maximum is 200.
+          default: 200
+          type: int
+          requires: false
+    responses:
+        "200":
+            description: List of streets.
+    """
 
     locality_id = int(request.match_info.get("locality_id", "0"))
 
@@ -55,7 +109,24 @@ async def all_streets_in_locality(request: web.Request):
 
 
 async def get_one_street(request: web.Request):
-    """Get street by id."""
+    """
+    ---
+    description: Get street by id.
+    method: GET
+    tags:
+        - Streets
+    produces:
+        - application/json
+    parameters:
+        - in: path
+          name: street_id
+          description: Street id.
+          type: int
+          required: true
+    responses:
+        "200":
+            description: Street object.
+    """
 
     street_id = int(request.match_info.get("street_id"))
 
