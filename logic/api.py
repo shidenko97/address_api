@@ -163,6 +163,38 @@ async def get_area(conn: PoolConnectionProxy, *, area_id: int):
     return area
 
 
+async def get_localities_by_substring(
+    conn: PoolConnectionProxy, *, substring: str, limit: int = 0
+):
+    """"""
+
+    sql = select([localities]).where(
+        localities.c.name.ilike(f"%{substring}%"),
+    )
+    limit = max(0, min(limit, API_MAX_LIMIT))
+
+    if limit:
+        sql = sql.limit(limit)
+
+    all_localities = await conn.fetch(sql)
+
+    return all_localities
+
+
+async def get_all_localities(conn: PoolConnectionProxy, *, limit: int = 0):
+    """"""
+
+    sql = select([localities])
+    limit = max(0, min(limit, API_MAX_LIMIT))
+
+    if limit:
+        sql = sql.limit(limit)
+
+    all_localities = await conn.fetch(sql)
+
+    return all_localities
+
+
 async def get_localities_in_area_by_substring(
     conn: PoolConnectionProxy, *, area_id: int, substring: str, limit: int = 0
 ):

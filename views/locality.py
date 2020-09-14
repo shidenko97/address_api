@@ -4,8 +4,50 @@ from logic.api import (
     get_localities_in_area_by_substring,
     get_all_localities_in_area,
     get_locality,
+    get_localities_by_substring,
+    get_all_localities,
 )
 from utils.json_serializer import to_json
+
+
+async def all_localities(request: web.Request):
+    """
+    ---
+    description: Get list of localities.
+    tags:
+        - Localities
+    produces:
+        - application/json
+    parameters:
+        - in: query
+          name: q
+          description: Substring to filter results.
+          type: str
+          requires: false
+        - in: query
+          name: limit
+          description: Max count of localities in list. Maximum is 200.
+          default: 200
+          type: int
+          requires: false
+    responses:
+        "200":
+            description: List of localities.
+    """
+
+    q = request.rel_url.query.get("q")
+    limit = int(request.rel_url.query.get("limit", "0"))
+
+    async with request.app["db"].acquire() as conn:
+
+        if q:
+            localities_objects = await get_localities_by_substring(
+                conn, substring=q, limit=limit
+            )
+        else:
+            localities_objects = await get_all_localities(conn, limit=limit)
+
+    return web.json_response(text=to_json(localities_objects))
 
 
 async def all_localities_in_area(request: web.Request):
