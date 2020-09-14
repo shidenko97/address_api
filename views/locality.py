@@ -33,6 +33,12 @@ async def all_localities(request: web.Request):
     responses:
         "200":
             description: List of localities.
+            content:
+                application/json:
+                    schema:
+                        type: array
+                        items:
+                            $ref: "#/components/schemas/Locality"
     """
 
     q = request.rel_url.query.get("q")
@@ -78,6 +84,12 @@ async def all_localities_in_area(request: web.Request):
     responses:
         "200":
             description: List of localities.
+            content:
+                application/json:
+                    schema:
+                        type: array
+                        items:
+                            $ref: "#/components/schemas/Locality"
     """
 
     area_id = int(request.match_info.get("area_id", "0"))
@@ -117,6 +129,10 @@ async def get_one_locality(request: web.Request):
     responses:
         "200":
             description: Locality object.
+            content:
+                application/json:
+                    schema:
+                        $ref: "#/components/schemas/Locality"
     """
 
     locality_id = int(request.match_info.get("locality_id"))

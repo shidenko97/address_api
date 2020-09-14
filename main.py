@@ -134,6 +134,203 @@ async def init_app(*, config: dict) -> web.Application:
         ),
         title="Address API Documentation",
         api_version="1.0.0",
+        definitions={
+            "Country": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "Country id",
+                        "required": True,
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Country name",
+                        "required": True,
+                    },
+                    "code": {
+                        "type": "string",
+                        "description": "Country code",
+                        "required": True,
+                    },
+                },
+            },
+            "Region": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "Region id",
+                        "required": True,
+                    },
+                    "country_id": {
+                        "type": "integer",
+                        "description": "Id of related country",
+                        "required": True,
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Region name",
+                        "required": True,
+                    },
+                    "geoip_name": {
+                        "type": "string",
+                        "description": "Region name by geoip",
+                        "required": True,
+                    },
+                },
+            },
+            "Area": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "Area id",
+                        "required": True,
+                    },
+                    "region_id": {
+                        "type": "integer",
+                        "description": "Id of related region",
+                        "required": True,
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Area name",
+                        "required": True,
+                    },
+                },
+            },
+            "Locality": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "Locality id",
+                        "required": True,
+                    },
+                    "area_id": {
+                        "type": "integer",
+                        "description": "Id of related area",
+                        "required": True,
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Locality name",
+                        "required": True,
+                    },
+                },
+            },
+            "District": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "District id",
+                        "required": True,
+                    },
+                    "locality_id": {
+                        "type": "integer",
+                        "description": "Id of related locality",
+                        "required": True,
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "District name",
+                        "required": True,
+                    },
+                },
+            },
+            "Street": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "Street id",
+                        "required": True,
+                    },
+                    "district_id": {
+                        "type": "integer",
+                        "description": "Id of related district",
+                        "required": True,
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Street name",
+                        "required": True,
+                    },
+                },
+            },
+            "House": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "House id",
+                        "required": True,
+                    },
+                    "street_id": {
+                        "type": "integer",
+                        "description": "Id of related street",
+                        "required": True,
+                    },
+                    "number": {
+                        "type": "string",
+                        "description": "House number",
+                        "required": True,
+                    },
+                    "index": {
+                        "type": "string",
+                        "description": "House index",
+                        "required": True,
+                    },
+                },
+            },
+            "FullAddress": {
+                "type": "object",
+                "properties": {
+                    "country": {
+                        "type": "string",
+                        "description": "Country name",
+                        "required": True,
+                    },
+                    "region": {
+                        "type": "string",
+                        "description": "Region name",
+                        "required": True,
+                    },
+                    "area": {
+                        "type": "string",
+                        "description": "Area name",
+                        "required": True,
+                    },
+                    "locality": {
+                        "type": "string",
+                        "description": "Locality name",
+                        "required": True,
+                    },
+                    "district": {
+                        "type": "string",
+                        "description": "District name",
+                        "required": True,
+                    },
+                    "street": {
+                        "type": "string",
+                        "description": "Street name",
+                        "required": True,
+                    },
+                    "house": {
+                        "type": "string",
+                        "description": "House number",
+                        "required": True,
+                    },
+                    "index": {
+                        "type": "string",
+                        "description": "House index",
+                        "required": True,
+                    },
+                },
+            },
+        },
     )
 
     app["config"] = config

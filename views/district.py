@@ -36,6 +36,12 @@ async def all_districts_in_locality(request: web.Request):
     responses:
         "200":
             description: List of districts.
+            content:
+                application/json:
+                    schema:
+                        type: array
+                        items:
+                            $ref: "#/components/schemas/District"
     """
 
     locality_id = int(request.match_info.get("locality_id", "0"))
@@ -75,6 +81,10 @@ async def get_one_district(request: web.Request):
     responses:
         "200":
             description: District object.
+            content:
+                application/json:
+                    schema:
+                        $ref: "#/components/schemas/District"
     """
 
     district_id = int(request.match_info.get("district_id"))

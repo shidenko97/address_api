@@ -36,6 +36,12 @@ async def all_areas_in_region(request: web.Request):
     responses:
         "200":
             description: List of areas.
+            content:
+                application/json:
+                    schema:
+                        type: array
+                        items:
+                            $ref: "#/components/schemas/Area"
     """
 
     region_id = int(request.match_info.get("region_id", "0"))
@@ -75,6 +81,10 @@ async def get_one_area(request: web.Request):
     responses:
         "200":
             description: Area object.
+            content:
+                application/json:
+                    schema:
+                        $ref: "#/components/schemas/Area"
     """
 
     area_id = int(request.match_info.get("area_id"))

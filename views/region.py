@@ -36,6 +36,12 @@ async def all_regions_in_country(request: web.Request):
     responses:
         "200":
             description: List of regions.
+            content:
+                application/json:
+                    schema:
+                        type: array
+                        items:
+                            $ref: "#/components/schemas/Region"
     """
 
     country_id = int(request.match_info.get("country_id", "0"))
@@ -75,6 +81,10 @@ async def get_one_region(request: web.Request):
     responses:
         "200":
             description: Region object.
+            content:
+                application/json:
+                    schema:
+                        $ref: "#/components/schemas/Region"
     """
 
     region_id = int(request.match_info.get("region_id"))

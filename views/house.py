@@ -37,6 +37,12 @@ async def all_houses_in_street(request: web.Request):
     responses:
         "200":
             description: List of houses.
+            content:
+                application/json:
+                    schema:
+                        type: array
+                        items:
+                            $ref: "#/components/schemas/House"
     """
 
     street_id = int(request.match_info.get("street_id", "0"))
@@ -76,6 +82,10 @@ async def get_one_house(request: web.Request):
     responses:
         "200":
             description: House object.
+            content:
+                application/json:
+                    schema:
+                        $ref: "#/components/schemas/House"
     """
 
     house_id = int(request.match_info.get("house_id"))
@@ -105,6 +115,10 @@ async def get_full_address_by_one_house(request: web.Request):
     responses:
         "200":
             description: Full address object by house.
+            content:
+                application/json:
+                    schema:
+                        $ref: "#/components/schemas/FullAddress"
     """
 
     house_id = int(request.match_info.get("house_id"))

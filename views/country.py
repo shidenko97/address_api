@@ -30,7 +30,13 @@ async def all_countries(request: web.Request):
           requires: false
     responses:
         "200":
-            description: List of countries.
+            description: Country object.
+            content:
+                application/json:
+                    schema:
+                        type: array
+                        items:
+                            $ref: "#/components/schemas/Country"
     """
 
     q = request.match_info.get("q")
@@ -66,6 +72,10 @@ async def get_one_country(request: web.Request):
     responses:
         "200":
             description: Country object.
+            content:
+                application/json:
+                    schema:
+                        $ref: "#/components/schemas/Country"
     """
 
     country_id = int(request.match_info.get("country_id"))

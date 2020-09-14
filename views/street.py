@@ -38,6 +38,12 @@ async def all_streets_in_district(request: web.Request):
     responses:
         "200":
             description: List of streets.
+            content:
+                application/json:
+                    schema:
+                        type: array
+                        items:
+                            $ref: "#/components/schemas/Street"
     """
 
     district_id = int(request.match_info.get("district_id", "0"))
@@ -87,6 +93,12 @@ async def all_streets_in_locality(request: web.Request):
     responses:
         "200":
             description: List of streets.
+            content:
+                application/json:
+                    schema:
+                        type: array
+                        items:
+                            $ref: "#/components/schemas/Street"
     """
 
     locality_id = int(request.match_info.get("locality_id", "0"))
@@ -126,6 +138,10 @@ async def get_one_street(request: web.Request):
     responses:
         "200":
             description: Street object.
+            content:
+                application/json:
+                    schema:
+                        $ref: "#/components/schemas/Street"
     """
 
     street_id = int(request.match_info.get("street_id"))
